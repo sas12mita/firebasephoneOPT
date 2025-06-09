@@ -12,25 +12,25 @@ class AuthController extends Controller
     {
         return view('register');
     }
+
+    // dd($request);
     public function registerstore(Request $request)
     {
-    //    // dd($request);
-    //     $request->validate([
-    //         'name' => 'required|string|max:255',
-    //         'phone' => 'required|string',
-    //         'password' => 'required|string|min:6|confirmed',
-    //     ]);
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'phone' => 'required|string',
+            'password' => 'required|string|min:6|confirmed',
+        ]);
 
-    //     $user = User::create([
-    //         'name' => $request->name,
-    //         'phone' => $request->phone,
-    //         'password' => Hash::make($request->password),
-    //     ]);
-    // // Store phone in session for OTP page
-    // session(['phone' => $user->phone]);
+        $user = User::create([
+            'name' => $request->name,
+            'phone' => $request->phone,
+            'password' => Hash::make($request->password),
+        ]);
 
-    // // Redirect to otp verification page (create this view)
-    // return redirect()->route('otp.verify');
+        // Store phone in session for OTP verification
+        session(['verification_phone' => $request->phone]);
 
+        return redirect()->route('otp.verify');
     }
 }
